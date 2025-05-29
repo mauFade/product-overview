@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose";
 const ReviewSchema = new Schema({
   productId: { type: String, required: true },
   author: { type: String, required: true },
-  rating: { type: Number, required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 },
   comment: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
@@ -70,4 +70,9 @@ export interface IReviewRepository {
   findByProductId(productId: string): Promise<Review[]>;
   update(id: string, data: Partial<IReview>): Promise<Review>;
   delete(id: string): Promise<void>;
+  getAverageRatingByProduct(productId: string): Promise<{
+    productId: string;
+    averageRating: number;
+    totalReviews: number;
+  }>;
 }

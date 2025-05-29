@@ -89,4 +89,39 @@ export class ReviewRepository implements IReviewRepository {
     const result = await this.reviewModel.findByIdAndDelete(id);
     if (!result) throw new Error("Review not found");
   }
+
+  public async getAverageRatingByProduct(productId: string): Promise<{
+    productId: string;
+    averageRating: number;
+    totalReviews: number;
+  }> {
+    const result = await this.reviewModel.aggregate([
+      { $match: { productId } },
+      {
+        $group: {
+          _id: "$productId",
+          averageRating: { $avg: "$rating" },
+          totalReviews: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          productId: "$_id",
+          averageRating: { $round: ["$averageRating", 2] },
+          totalReviews: 1,
+        },
+      },
+    ]);
+
+    if (result.length === 0) {
+      return {
+        productId,
+        averageRating: 0,
+        totalReviews: 0,
+      };
+    }
+
+    return result[0];
+  }
 }
