@@ -19,7 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../../api/api";
-import { RatingStars } from "@/components/rating-starts";
+import { RatingStars } from "@/components/rating-stars";
 
 const ProductRatingCard = ({
   productId,

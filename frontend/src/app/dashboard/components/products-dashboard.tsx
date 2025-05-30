@@ -56,7 +56,7 @@ const ProductsDashboard = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Dashboard de Produtos
+            Central de Produtos
           </h1>
           <p className="text-muted-foreground">
             Gerencie seus produtos de forma simples e eficiente

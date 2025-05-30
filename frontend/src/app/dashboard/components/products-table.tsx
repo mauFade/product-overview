@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Edit, MoreHorizontal, Trash2 } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { ProductForm } from "./product-form";
+import { useRouter } from "next/navigation";
 
 interface Product {
   id: string;
@@ -49,6 +50,8 @@ interface ProductsTableProps {
 }
 
 const ProductsTable = ({ products }: ProductsTableProps) => {
+  const router = useRouter();
+
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [deletingProduct, setDeletingProduct] = useState<Product | null>(null);
 
@@ -69,6 +72,10 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       });
     },
   });
+
+  const handleViewProduct = (productId: string) => {
+    router.push(`/products/${productId}`);
+  };
 
   const handleDelete = () => {
     if (deletingProduct) {
@@ -130,6 +137,12 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => handleViewProduct(product.id)}
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          Ver Detalhes
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => setEditingProduct(product)}
                         >
