@@ -101,6 +101,19 @@ class Api {
     await this.axios.delete(`/reviews/${id}`);
   }
 
+  public async getAverageRating(productId: string): Promise<{
+    productId: string;
+    averageRating: number;
+    totalReviews: number;
+  }> {
+    const response = await this.axios.get<{
+      productId: string;
+      averageRating: number;
+      totalReviews: number;
+    }>(`/reviews/product/${productId}/average`);
+    return response.data;
+  }
+
   public async createProduct(data: {
     name: string;
     description: string;
