@@ -23,7 +23,7 @@ Este é um aplicativo de gerenciamento de produtos com as seguintes funcionalida
 - **Backend**:
   - Node.js com Express
   - Arquitetura em camadas (domain, infra)
-  - PostgreSQL como banco de dados
+  - MongoDB como banco de dados
 
 ## Requisitos
 
