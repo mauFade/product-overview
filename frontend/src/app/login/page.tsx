@@ -22,7 +22,7 @@ const LoginPage = () => {
         <p className="text-sm text-muted-foreground text-center mt-6">
           Não tem uma conta?{" "}
           <Link
-            href="/register"
+            href="/signup"
             className="text-primary font-medium hover:underline transition-colors"
           >
             Registre-se

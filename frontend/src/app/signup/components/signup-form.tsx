@@ -25,6 +25,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/app/api/api";
+import { setCookie } from "cookies-next";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const signupSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -44,8 +49,22 @@ export function SignupForm() {
     },
   });
 
+  const router = useRouter();
+
+  const { mutate } = useMutation({
+    mutationFn: (data: SignupFormData) => api.signup(data),
+    onSuccess: ({ token }) => {
+      toast.success("Conta criada com sucesso");
+      setCookie("token", token);
+      router.push("/dashboard");
+    },
+    onError: () => {
+      toast.error("Erro ao criar conta");
+    },
+  });
+
   const onSubmit = (data: SignupFormData) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
